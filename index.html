@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>HTML5 Game Template</title>
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0"/>
+		<meta charset="utf-8"/>
+		<!-- Load stylesheets -->
+		<link href="css/style.css" rel="stylesheet"/>
+<!-- 		<link href="css/bootstrap-responsive.min.css" rel="stylesheet"/>
+		<link href="css/bootstrap.min.css" rel="stylesheet"/>
+		<link href="css/normalize.css" rel="stylesheet"/> -->
+	</head>
+	<body>
+		<div id="container">
+			<canvas id="canvas" width="1920" height="1080">Your browser doesn't support HTML5! Please <a href="http://www.mozilla.org">upgrade</a> your browser.</canvas>
+		</div>
+		<!-- Load scripts -->
+		<script src="js/engine.js"></script>
+		<script src="js/script.js"></script>
+		<script src="js/jquery-1.10.1.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+			var socket = io();
+			var moves = []; //list of moves
+			var w_cap = []; //list of pieces white has captured
+			var b_cap = []; //list of pieces black has captured
+			var player = {"display-name": "",
+						  "color" : "#FF0000"};  //current player
+			var turn = "";  //color of current turn
+			var votes = {}; //votes for moves
+			var state = -1; //board state
+			var alert = "";
+			var timer = {startTime :0, length: 0};
+			var alertText = "";
+			var alertInProgress = false;
+
+			//players in queue
+			var players = [];
+
+			//board
+			var fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+
+
+			socket.on('board', function(newFen) {
+				fen = newFen;
+				turn = fen.split(' ')[1] == 'w' ? 'purple' : 'black';
+
+			});
+			socket.on('move', function(move) {
+				moves.push(move);
+				if (move.captured) {
+					if (move.color == 'b') {
+						b_cap.push(move.captured.toUpperCase());
+					}
+					else {
+						w_cap.push(move.captured);
+					}
+				}
+				console.log(move);
+			});
+			socket.on('moves', function(mvs) {
+				console.log(mvs);
+				if (mvs.length > 0) {
+					moves = mvs;
+					var b = [];
+					var w = [];
+					for (var i = 0; i < moves.length; i++) {
+						var move = mvs[i];
+						if (move.captured) {
+							if (move.color == 'b') {
+								b.push(move.captured);
+							}
+							else {
+								w.push(move.captured);
+							}
+						}
+					}
+					b_cap = b;
+					w_cap = w;
+
+					console.log(b_cap);
+					console.log(w_cap);
+				}
+			});
+		  	socket.on('player_selected', function(p) {
+		  		console.log(p);
+		  		if (p != "") {
+			  		player = p;
+			  		players = [];	
+		  		}
+		  	});
+
+		  	socket.on('votes', function(v) {
+		  		votes = v;
+		  		console.log(v);
+		  	});
+
+		  	socket.on('state', function(s) {
+		  		state = s;
+		  	});
+
+		  	socket.on('player', function(p) {
+		  		p.x = Math.random() * (805 - Game.TextSize('12pt Helvetica-Neue', p['display-name']).width) + 558;
+		  		p.y = Math.random() * 315 + 350;
+		  		players.push(p);
+		  	});
+
+		  	socket.on('players', function(p) {
+		  		for (var i = 0; i < p.length; i++) {
+		  			var player = p[i];
+		  			player.x = Math.random() * (805 - Game.TextSize('12pt Helvetica-Neue', p['display-name']).width) + 558;
+		  			player.y = Math.random() * 315 + 350;
+		  		}
+		  		players = p;
+		  	});
+
+		  	socket.on('time', function(t) {
+		  		timer = t;
+		  	});
+		  	socket.on('reset', function() {
+				moves = []; //list of moves
+				w_cap = []; //list of pieces white has captured
+				b_cap = []; //list of pieces black has captured
+				player = {"display-name": "",
+							  "color" : "#FF0000"};  //current player
+				turn = "";  //color of current turn
+				votes = {}; //votes for moves
+				state = -1; //board state
+
+				//players in queue
+				players = [];
+
+				//board
+				fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+		  	});
+
+		  	socket.on('alert', function(message) {
+				alertInProgress = true;
+				alertText = message;
+		  	})
+
+		</script>
+
+
+
+	</body>
+</html>

@@ -1,0 +1,31 @@
+@font-face {
+    font-family: 'Pricedown';
+    src: url('../font/pricedown.ttf');
+}
+
+@font-face {
+	font-family: 'Helvetica-Neue';
+	src: url('../font/HelveticaNeue-Medium.ttf');
+}
+
+@font-face {
+    font-family: 'Age';
+    src: url('../font/Age.ttf');
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../font/OpenSans-Bold.ttf');
+}
+
+
+#canvas {
+    padding: 0;
+    margin: auto;
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
