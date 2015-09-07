@@ -1,4 +1,4 @@
-GameTemplate
+Twitch Chess Bot
 ============
 
-A basic template for users on the site, which uses Bootstrap, jQuery, and Modernizr and includes style.css, script.js, engine.js, and index.html files.
+Chess Bot on twitch.tv/twitchchessbot
