@@ -1,0 +1,10 @@
+{
+    "dbUrl": "DATABASE_URL",
+    "twitchBot": {
+        "username": "TWITCH_USERNAME",
+        "oauth": "TWITCH_OAUTH_TOKEN",
+        "channels": []
+    },
+    "player": "TWITCH_PLAYER",
+    "timer": 30
+}

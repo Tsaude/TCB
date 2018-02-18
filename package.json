@@ -1,5 +1,5 @@
 {
-  "name": "TwitchChessBot",
+  "name": "twitch-chess",
   "version": "0.0.1",
   "description": "The brains behind http://twitch.tv/twitchchessbot",
   "author": "Tucker Saude <tsaude@live.com> (https://github.com/tsaude)",
@@ -9,9 +9,10 @@
     "url": "http://github.com/tsaude/TCB"
   },
   "dependencies": {
-    "tmi.js": "latest",
+    "twitch-bot": "latest",
     "socket.io": "latest",
-    "mysql": "latest",
-    "express": "latest"
+    "express": "latest",
+    "request": "latest",
+    "mongoose": "latest"
   }
 }

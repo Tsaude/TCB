@@ -1,5 +1,0 @@
-SAN ✓
-symbol on king when checked 
-alert on illegal moves ✓
-uppercase and lowercase input ✓
-black moves instant ✓
